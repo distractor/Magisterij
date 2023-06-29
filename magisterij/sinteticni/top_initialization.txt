@@ -1,0 +1,10 @@
+        m = deepgp.DeepGP([Ytr.shape[1],1,Xtr.shape[1]],Ytr, X=Xtr,kernels=[GPy.kern.RBF(1), GPy.kern.RBF(Xtr.shape[1])], num_inducing=Nind, back_constraint=False)
+        m.obslayer.rbf.variance = 20 #default 1
+        m.obslayer.rbf.lengthscale =10 #default 1
+    ##    m.obslayer.Gaussian_noise.variance = 0.06 
+        m.obslayer.latent_space.mean = np.linspace(-1.0,1.0,Xtr.shape[0])[:,None]
+#        m.obslayer.latent_space.variance = np.add(np.linspace(-0.00009,0.00009,Xtr.shape[0]),np.asarray([0.0001]*Xtr.shape[0]))[:,None]
+    ##    m.obslayer.Kuu_var = np.asarray([0.05]*Nind)
+        m.layer_1.inducing_inputs = np.repeat(np.linspace(-1.0,1.0,Nind)[:,None],6,axis=1)
+        m.layer_1.rbf.variance =80 #default 1
+        m.layer_1.rbf.lengthscale = 15 #default 1
